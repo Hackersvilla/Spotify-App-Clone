@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:spotify_clone/Audio/audio_UI.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -87,14 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
               make_recents(
                   "https://static.toiimg.com/thumb/msid-65819638,width-1200,height-900,resizemode-4/.jpg",
                   "Suit",
-                  "Punjabi"),
+                  "Punjabi",
+                  1,
+                  context),
               const SizedBox(
                 width: 20,
               ),
               make_recents(
                   "https://m.media-amazon.com/images/I/618NBd2d4xL.jpg",
                   "Desi",
-                  "Kalakaar"),
+                  "Kalakaar",
+                  2,
+                  context),
             ],
           ),
           const SizedBox(
@@ -105,14 +111,18 @@ class _HomeScreenState extends State<HomeScreen> {
               make_recents(
                   "https://static.toiimg.com/thumb/msid-65821941,width-1200,height-900,resizemode-4/.jpg",
                   "Same",
-                  "Beef"),
+                  "Beef",
+                  3,
+                  context),
               const SizedBox(
                 width: 20,
               ),
               make_recents(
                   "https://a10.gaanacdn.com/images/albums/95/2450195/crop_480x480_1552993303_2450195.jpg",
                   "East Side",
-                  "Flow"),
+                  "Flow",
+                  4,
+                  context),
             ],
           ),
         ],
@@ -257,58 +267,67 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-make_recents(var image, String text1, String text2) {
-  return Container(
-    decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(10),
-          topLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-          bottomLeft: Radius.circular(10),
-        )),
-    width: 180,
-    height: 71,
-    child: Row(
-      children: [
-        ClipRRect(
+make_recents(
+    var image, String text1, String text2, int id, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.bottomToTop, child: AudioUI()));
+    },
+    child: Container(
+      decoration: BoxDecoration(
+          color: Colors.grey[900],
           borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(10),
             topLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
             bottomLeft: Radius.circular(10),
+          )),
+      width: 180,
+      height: 71,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+            ),
+            child: Image.network(
+              image,
+              width: 90,
+              height: 90,
+            ),
           ),
-          child: Image.network(
-            image,
-            width: 90,
-            height: 90,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                fit: FlexFit.tight,
-                child: Text(text1,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: GoogleFonts.raleway().fontFamily)),
-              ),
-              Flexible(
-                fit: FlexFit.tight,
-                child: Text(text2,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: GoogleFonts.raleway().fontFamily)),
-              ),
-            ],
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Text(text1,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.raleway().fontFamily)),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Text(text2,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.raleway().fontFamily)),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     ),
   );
 }
