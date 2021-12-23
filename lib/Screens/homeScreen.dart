@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:spotify_clone/Audio/audio_UI.dart';
+import 'package:spotify_clone/globals.dart' as globals;
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  /////////////////////////////
   starting_row() {
     return Container(
       padding: EdgeInsets.all(18.0),
@@ -90,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   "https://static.toiimg.com/thumb/msid-65819638,width-1200,height-900,resizemode-4/.jpg",
                   "Suit",
                   "Punjabi",
-                  1,
+                  '1',
                   context),
               const SizedBox(
                 width: 20,
@@ -99,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   "https://m.media-amazon.com/images/I/618NBd2d4xL.jpg",
                   "Desi",
                   "Kalakaar",
-                  2,
+                  '2',
                   context),
             ],
           ),
@@ -112,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   "https://static.toiimg.com/thumb/msid-65821941,width-1200,height-900,resizemode-4/.jpg",
                   "Same",
                   "Beef",
-                  3,
+                  '3',
                   context),
               const SizedBox(
                 width: 20,
@@ -121,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   "https://a10.gaanacdn.com/images/albums/95/2450195/crop_480x480_1552993303_2450195.jpg",
                   "East Side",
                   "Flow",
-                  4,
+                  '4',
                   context),
             ],
           ),
@@ -268,13 +270,17 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 make_recents(
-    var image, String text1, String text2, int id, BuildContext context) {
+    var image, String text1, String text2, String id, BuildContext context) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.bottomToTop, child: AudioUI()));
+        context,
+        PageTransition(
+          type: PageTransitionType.bottomToTop,
+          child: AudioUI(),
+        ),
+      );
+      globals.block_id = id;
     },
     child: Container(
       decoration: BoxDecoration(

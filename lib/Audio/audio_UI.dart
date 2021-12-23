@@ -2,20 +2,58 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:spotify_clone/Audio/audio_file.dart';
+import 'package:spotify_clone/globals.dart' as globals;
 
 class AudioUI extends StatefulWidget {
-  const AudioUI({Key key}) : super(key: key);
+  const AudioUI({Key? key}) : super(key: key);
 
   @override
   _AudioUIState createState() => _AudioUIState();
 }
 
 class _AudioUIState extends State<AudioUI> {
-  AudioPlayer audioplayer;
+  late String get_string;
+  late String text;
+  late Widget image;
+  late String artist_text;
+
   @override
   void initState() {
     super.initState();
-    audioplayer = AudioPlayer();
+    setState(() {
+      get_string = globals.block_id;
+    });
+    if (get_string == '1') {
+      text = "Suit Punjabi";
+      image = Image.asset("assets/punjabi.jpg", width: 400, height: 400);
+      artist_text = "Jass Manak";
+    }
+    if (get_string == '2') {
+      text = "Desi Kalakaar";
+      image = Image.network(
+          "https://m.media-amazon.com/images/I/618NBd2d4xL.jpg",
+          width: 400,
+          height: 400);
+      artist_text = "Honey Singh";
+    }
+    if (get_string == '3') {
+      text = "Same Beef";
+      image = Image.network(
+        "https://static.toiimg.com/thumb/msid-65821941,width-1200,height-900,resizemode-4/.jpg",
+        width: 400,
+        height: 400,
+      );
+      artist_text = "Sidhu Moosewala";
+    }
+    if (get_string == '4') {
+      text = "East Side Flow";
+      image = Image.network(
+        "https://a10.gaanacdn.com/images/albums/95/2450195/crop_480x480_1552993303_2450195.jpg",
+        width: 400,
+        height: 400,
+      );
+      artist_text = "Sidhu Moosewala";
+    }
   }
 
   top_bar() {
@@ -40,7 +78,7 @@ class _AudioUIState extends State<AudioUI> {
                 style: TextStyle(color: Colors.white),
               ),
               Text(
-                "Suit Punjabi",
+                text,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -60,9 +98,7 @@ class _AudioUIState extends State<AudioUI> {
 
   image_part() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 40),
-      child: Image.asset("assets/punjabi.jpg", width: 400, height: 400),
-    );
+        padding: const EdgeInsets.only(left: 20, right: 40), child: image);
   }
 
   title_part() {
@@ -76,7 +112,7 @@ class _AudioUIState extends State<AudioUI> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Suit Punjabi",
+                  text,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -85,7 +121,7 @@ class _AudioUIState extends State<AudioUI> {
                   ),
                 ),
                 Text(
-                  "Jass Manak",
+                  artist_text,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 17,
@@ -126,9 +162,7 @@ class _AudioUIState extends State<AudioUI> {
               const SizedBox(
                 height: 10,
               ),
-              AudioFile(
-                advanceplayer: audioplayer,
-              ),
+              AudioFile(),
             ],
           ),
         ),

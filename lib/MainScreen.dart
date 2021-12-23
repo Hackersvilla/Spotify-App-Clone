@@ -6,7 +6,7 @@ import 'package:spotify_clone/Screens/library.dart';
 import 'package:spotify_clone/Screens/search.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
