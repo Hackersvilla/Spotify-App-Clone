@@ -17,6 +17,8 @@ class _AudioUIState extends State<AudioUI> {
   late Widget image;
   late String artist_text;
 
+  final audioplayer = globals.audioPlayer;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +66,7 @@ class _AudioUIState extends State<AudioUI> {
           GestureDetector(
             onTap: () {
               Navigator.pop(context);
+              audioplayer.stop();
             },
             child: const Icon(Icons.keyboard_arrow_down_rounded,
                 color: Colors.white, size: 40),

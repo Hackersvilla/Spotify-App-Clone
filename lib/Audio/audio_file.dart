@@ -1,6 +1,4 @@
-import 'dart:ui';
-
-import 'package:audioplayers/audioplayers.dart';
+import 'package:spotify_clone/globals.dart' as globals;
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,9 +10,10 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
+  final audioPlayer = globals.audioPlayer;
   String audio_url =
       "https://songdownloadmp3free.com/wp-content/uploads/2020/04/Suit-Punjabi-by-Jass-Manak-Dance-Punjabi-Shagur-Album-SINGLE.mp3";
-  AudioPlayer audioPlayer = AudioPlayer();
+
   late Duration duration = const Duration();
   late Duration position = const Duration();
   bool isPlaying = false;
@@ -81,12 +80,12 @@ class _AudioFileState extends State<AudioFile> {
       height: 0,
       padding: const EdgeInsets.only(top: 20),
       child: Slider(
-        value: 0,
+        value: position.inSeconds.toDouble(),
         onChanged: (value) {},
         activeColor: Colors.white,
         inactiveColor: Colors.grey[900],
         min: 0,
-        max: 20,
+        max: duration.inSeconds.toDouble(),
       ),
     );
   }
