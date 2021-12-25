@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:spotify_clone/globals.dart' as globals;
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,8 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
-  final audioPlayer = globals.audioPlayer;
+  AudioPlayer audioPlayer = AudioPlayer();
+
   String audio_url =
       "https://songdownloadmp3free.com/wp-content/uploads/2020/04/Suit-Punjabi-by-Jass-Manak-Dance-Punjabi-Shagur-Album-SINGLE.mp3";
 
