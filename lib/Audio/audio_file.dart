@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:audioplayers/audioplayers.dart';
 import "package:flutter/material.dart";
+import 'package:google_fonts/google_fonts.dart';
 
 class AudioFile extends StatefulWidget {
   const AudioFile({Key? key}) : super(key: key);
@@ -9,12 +12,18 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
-  String url =
+  String audio_url =
       "https://songdownloadmp3free.com/wp-content/uploads/2020/04/Suit-Punjabi-by-Jass-Manak-Dance-Punjabi-Shagur-Album-SINGLE.mp3";
   AudioPlayer audioPlayer = AudioPlayer();
   late Duration duration = const Duration();
   late Duration position = const Duration();
-  String player_state = "Stopped";
+  bool isPlaying = false;
+  bool isPaused = false;
+
+  final List<IconData> _icons = const [
+    Icons.play_arrow,
+    Icons.pause,
+  ];
 
   @override
   void initState() {
@@ -34,18 +43,25 @@ class _AudioFileState extends State<AudioFile> {
         position = updatePosition;
       });
     });
+  }
 
-    audioPlayer.onPlayerStateChanged.listen((updatedState) {
-      if (updatedState == PlayerState.PLAYING) {
-        player_state = "Playing";
-      }
-      if (updatedState == PlayerState.PAUSED) {
-        player_state = "Paused";
-      }
-      if (updatedState == PlayerState.STOPPED) {
-        player_state = "Stopped";
-      }
-    });
+  Widget build_btn() {
+    return IconButton(
+        onPressed: () {
+          if (isPlaying == false) {
+            playaudio(audio_url);
+            setState(() {
+              isPlaying = true;
+            });
+          } else {
+            pauseaudio();
+            setState(() {
+              isPlaying = false;
+            });
+          }
+        },
+        icon:
+            isPlaying ? Icon(_icons[1], size: 30) : Icon(_icons[0], size: 30));
   }
 
   playaudio(url) {
@@ -65,7 +81,7 @@ class _AudioFileState extends State<AudioFile> {
       height: 0,
       padding: const EdgeInsets.only(top: 20),
       child: Slider(
-        value: 10,
+        value: 0,
         onChanged: (value) {},
         activeColor: Colors.white,
         inactiveColor: Colors.grey[900],
@@ -77,7 +93,7 @@ class _AudioFileState extends State<AudioFile> {
 
   audio_players() {
     return Container(
-      padding: const EdgeInsets.only(left: 15, right: 10, top: 50, bottom: 0),
+      padding: const EdgeInsets.only(left: 15, right: 10, top: 20, bottom: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -90,26 +106,15 @@ class _AudioFileState extends State<AudioFile> {
               color: Colors.white, size: 50),
 
           //
-          GestureDetector(
-              onTap: () {
-                player_state = "Playing";
-                playaudio(url);
-                setState(() {
-                  player_state == "Stopped"
-                      ? const Icon(Icons.play_arrow,
-                          color: Colors.black, size: 40)
-                      : const Icon(Icons.pause, color: Colors.black);
-                });
-              },
-              child: Container(
-                  width: 70,
-                  height: 70,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: const Icon(Icons.play_arrow,
-                      color: Colors.black, size: 40))),
+          Container(
+            width: 70,
+            height: 70,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: build_btn(),
+          ),
 
           const Icon(Icons.skip_next_rounded, color: Colors.white, size: 50),
 
@@ -120,6 +125,37 @@ class _AudioFileState extends State<AudioFile> {
     );
   }
 
+  time_row() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 25,
+        right: 25,
+        top: 40,
+      ),
+      child: SizedBox(
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(
+          position.toString().split('.').first,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            fontFamily: GoogleFonts.lato().fontFamily,
+          ),
+        ),
+        Text(
+          duration.toString().split('.').first,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.normal,
+              fontFamily: GoogleFonts.lato().fontFamily),
+        ),
+      ])),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -127,6 +163,7 @@ class _AudioFileState extends State<AudioFile> {
         children: [
           //play audiop
           make_slider(),
+          time_row(),
           audio_players()
         ],
       ),
